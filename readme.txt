@@ -56,8 +56,9 @@ You can change the font of the announcement title through the plugin settings, a
 You can customize the text type of the announcement (e.g., normal, bold, italic) through the plugin settings, providing flexibility in how your announcement is presented.
 
 == Changelog ==
-= 1.1.01: March 31, 2024 =
+= 1.1.03: March 31, 2024 =
 * Fixed bug
+* Security Upgrade
 
 = 1.1.01: March 30, 2024 =
 * Initial release of WP Admin Announcement

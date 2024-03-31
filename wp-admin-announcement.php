@@ -11,7 +11,7 @@
  * Plugin Name:   WP Admin Announcement
  * Plugin URI:    https://github.com/Thiararapeter/WP-Admin-Announcement
  * Description:   A plugin to display a custom announcement on the WordPress dashboard for all users.
- * Version:       1.1.02
+ * Version:       1.1.03
  * Author:        Thiarara
  * Author URI:    https://github.com/thiararapeter
  * Text Domain:   wp-admin-announcement
@@ -85,14 +85,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                 $type = esc_html($feedback['type']);
                 $comment = esc_html($feedback['comment']);
                 $submitted = isset($feedback['submitted']) ? esc_html($feedback['submitted']) : 'Unknown';
-                echo "<tr><td><input type='checkbox' name='cdn_feedback_to_delete[]' value='$index'></td><td>$announcement_title</td><td>$username</td><td>$type</td><td>$comment</td><td>$submitted</td></tr>";
+                echo "<tr><td><input type='checkbox' name='cdn_feedback_to_delete[]' value='" . esc_attr($index) . "'></td><td>" . esc_html($announcement_title) . "</td><td>" . esc_html($username) . "</td><td>" . esc_html($type) . "</td><td>" . esc_html($comment) . "</td><td>" . esc_html($submitted) . "</td></tr>";
             }
         }
         echo '</table>';
         echo '<input type="hidden" name="cdn_feedback_action" value="delete_selected_comments">';
         echo '<input type="submit" name="cdn_delete_selected_comments_submit" value="Delete Selected Comments" style="padding: 10px 20px; margin-top: 20px;">';
         echo '</form>';
-        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . date('Y') . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
+        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . esc_html(date('Y')) . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
         echo '</div>';
     }
 }
@@ -193,7 +193,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         ));
         echo '<br><input type="submit" name="cdn_announcement_submit" value="Publish Announcement" style="margin-top: 10px;">';
         echo '</form>';
-        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . date('Y') . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
+        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . esc_html(date('Y')) . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
         echo '</div>';
    	 }
 	}
@@ -259,7 +259,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     break;
             }
             if (!empty($current_announcement_title)) {
-                echo '<h2 class="cdn-announcement-title" style="margin-top: 20px; ' . $title_style . ' color: ' . esc_attr($title_color) . ';">' . esc_html($current_announcement_title) . '</h2>';
+                echo '<h2 class="cdn-announcement-title" style="margin-top: 20px; ' . esc_attr($title_style) . ' color: ' . esc_attr($title_color) . ';">' . esc_html($current_announcement_title) . '</h2>';
             }
             if (!empty($current_announcement_content)) {
                 echo '<p class="cdn-announcement-text" style="margin-top: 20px; ' . $text_style . '">' . $current_announcement_content . '</p>';
