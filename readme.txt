@@ -2,13 +2,13 @@
 Plugin Name: WP Admin Announcement
 Author URI: https://github.com/thiararapeter
 Plugin URI: https://github.com/Thiararapeter/WP-Admin-Announcement
-Donate link: 
+Donate link: https://www.buymeacoffee.com/thiarara
 Contributors: Thiarara, Creative DesignersKE
 Tags: Admin Announcement, Announcement, dashboard announcement, widget announcement
 Requires at least: 4.7
 Tested up to: 5.9
 Requires PHP: 8.0
-Stable tag: 1.1.01
+Stable tag: 1.1.02
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,8 @@ You can change the font of the announcement title through the plugin settings, a
 You can customize the text type of the announcement (e.g., normal, bold, italic) through the plugin settings, providing flexibility in how your announcement is presented.
 
 == Changelog ==
+= 1.1.01: March 31, 2024 =
+* Fixed bug
 
 = 1.1.01: March 30, 2024 =
 * Initial release of WP Admin Announcement
@@ -73,4 +75,16 @@ You can customize the text type of the announcement (e.g., normal, bold, italic)
 2. Click on the button `Add new`
 3. Search for `WP Admin Announcement` and click 'Install Now' or click on the `upload` link to upload `wp-admin-announcement.zip`
 4. Click on `Activate plugin`
+
+== Upgrade Notice ==
+
+No == Upgrade Notice == section was found.
+
+== Screenshots ==
+
+No == Screenshots == section was found.
+
+== Donate link ==
+
+https://www.buymeacoffee.com/thiarara
 */
