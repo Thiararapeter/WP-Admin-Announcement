@@ -1,45 +1,15 @@
 <?php
 /**
- * WP Admin Announcement
- *
- * @package       WPADMINANN
- * @author        Thiarara
- * @license       gplv2-or-later
- * @version       1.1.01
- *
- * @wordpress-plugin
- * Plugin Name:   WP Admin Announcement
- * Plugin URI:    https://github.com/Thiararapeter/WP-Admin-Announcement
- * Description:   A plugin to display a custom announcement on the WordPress dashboard for all users.
- * Version:       1.1.03
- * Author:        Thiarara
- * Author URI:    https://github.com/thiararapeter
- * Text Domain:   wp-admin-announcement
- * Domain Path:   /languages
- * License:       GPLv2 or later
- * License URI:   https://www.gnu.org/licenses/gpl-2.0.html
- *
- * You should have received a copy of the GNU General Public License
- * along with WP Admin Announcement. If not, see <https://www.gnu.org/licenses/gpl-2.0.html/>.
+ * Plugin Name: WP Admin Announcement
+ * Description: A plugin to display a custom announcement on the WordPress dashboard for all users.
+ * Version: 1.0
+ * Author: Your Name
  */
 
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-/**
- * HELPER COMMENT START
- * 
- * This file contains the logic required to run the plugin.
- * To add some functionality, you can simply define the WordPres hooks as followed: 
- * 
- * add_action( 'init', 'some_callback_function', 10 );
- * 
- * and call the callback function like this 
- * 
- * function some_callback_function(){}
- * 
- * HELPER COMMENT END
- */
+	// Exit if accessed directly
+	if (!defined('ABSPATH')) {
+		exit;
+	}
 
 	// Hook into the WordPress admin_menu action to add our admin page
 	add_action('admin_menu', 'cdn_add_admin_page');
@@ -57,7 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     function cdn_comments_page_content() {
         // Retrieve and display feedback
         $feedback_data = get_option('cdn_feedback_data', array());
-        $current_announcement_title = get_option('cdn_announcement_title', '');
 
         echo '<div style="width: 50%; margin: 0 auto; border: 1px solid #ccc; padding: 20px; background-color: #f9f9f9; font-family: Arial, sans-serif;">';
         echo '<h1 style="font-size: 24px; color: #333;">Announcement Feedback</h1>';
@@ -80,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             echo '<tr><td colspan="6">No comments yet.</td></tr>';
         } else {
             foreach ($feedback_data as $index => $feedback) {
-                $announcement_title = isset($feedback['announcement_title']) ? esc_html($feedback['announcement_title']) : $current_announcement_title;
+                $announcement_title = isset($feedback['announcement_title']) ? esc_html($feedback['announcement_title']) : 'Unknown';
                 $username = isset($feedback['username']) ? esc_html($feedback['username']) : 'Anonymous';
                 $type = esc_html($feedback['type']);
                 $comment = esc_html($feedback['comment']);
@@ -96,6 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         echo '</div>';
     }
 }
+
 
 	// hook for Feedback form
 	if (!function_exists('cdn_process_feedback')) {
@@ -193,7 +163,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         ));
         echo '<br><input type="submit" name="cdn_announcement_submit" value="Publish Announcement" style="margin-top: 10px;">';
         echo '</form>';
-        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . esc_html(date('Y')) . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
+        echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . date('Y') . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
         echo '</div>';
    	 }
 	}
@@ -259,7 +229,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                     break;
             }
             if (!empty($current_announcement_title)) {
-                echo '<h2 class="cdn-announcement-title" style="margin-top: 20px; ' . esc_attr($title_style) . ' color: ' . esc_attr($title_color) . ';">' . esc_html($current_announcement_title) . '</h2>';
+                echo '<h2 class="cdn-announcement-title" style="margin-top: 20px; ' . $title_style . ' color: ' . esc_attr($title_color) . ';">' . esc_html($current_announcement_title) . '</h2>';
             }
             if (!empty($current_announcement_content)) {
                 echo '<p class="cdn-announcement-text" style="margin-top: 20px; ' . $text_style . '">' . $current_announcement_content . '</p>';
@@ -294,12 +264,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         
         // Display the copyright after the feedback form
         echo '<p class="cdn-copyright-text" style="text-align: center; margin-top: 20px; color: ' . esc_attr($footer_color_setting) . ';">&copy; ' . date('Y') . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
-       }
     }
+}
 
 
 		if (!function_exists('cdn_process_feedback')) {
-     function cdn_process_feedback() {
+    function cdn_process_feedback() {
         if (isset($_POST['cdn_feedback_action']) && $_POST['cdn_feedback_action'] === 'submit_feedback') {
             $feedback_type = isset($_POST['cdn_feedback_type']) ? sanitize_text_field($_POST['cdn_feedback_type']) : '';
             $feedback_comment = isset($_POST['cdn_feedback_comment']) ? sanitize_text_field($_POST['cdn_feedback_comment']) : '';
@@ -332,109 +302,109 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     }
 }
 
-    if (!function_exists('cdn_feedback_error_notice')) {
-        function cdn_feedback_error_notice() {
-            echo '<div id="message" class="error notice is-dismissible"><p>Feedback must be more than 3 characters.</p></div>';
-        }
+if (!function_exists('cdn_feedback_error_notice')) {
+    function cdn_feedback_error_notice() {
+        echo '<div id="message" class="error notice is-dismissible"><p>Feedback must be more than 3 characters.</p></div>';
     }
+}
 
-    if (!function_exists('cdn_feedback_success_notice')) {
-        function cdn_feedback_success_notice() {
-            echo '<div id="message" class="updated notice is-dismissible"><p>Feedback submitted successfully.</p></div>';
-        }
+if (!function_exists('cdn_feedback_success_notice')) {
+    function cdn_feedback_success_notice() {
+        echo '<div id="message" class="updated notice is-dismissible"><p>Feedback submitted successfully.</p></div>';
     }
+}
 
-    // Hook into the WordPress admin_init action to add our settings
-    add_action('admin_init', 'cdn_settings_init');
+// Hook into the WordPress admin_init action to add our settings
+add_action('admin_init', 'cdn_settings_init');
 
-    if (!function_exists('cdn_settings_init')) {
-        function cdn_settings_init() {
-            register_setting('cdn_settings_group', 'cdn_access_level', array('type' => 'array', 'sanitize_callback' => 'cdn_sanitize_access_level'));
-            register_setting('cdn_settings_group', 'cdn_color_setting');
-            register_setting('cdn_settings_group', 'cdn_badge_duration');
-            register_setting('cdn_settings_group', 'cdn_footer_color_setting');
-            register_setting('cdn_settings_group', 'cdn_announcement_text_type');
-            register_setting('cdn_settings_group', 'cdn_announcement_title_font');
-            register_setting('cdn_settings_group', 'cdn_announcement_title_color');
-            register_setting('cdn_settings_group', 'cdn_google_font_type'); // New setting for Google Font type
+if (!function_exists('cdn_settings_init')) {
+    function cdn_settings_init() {
+        register_setting('cdn_settings_group', 'cdn_access_level', array('type' => 'array', 'sanitize_callback' => 'cdn_sanitize_access_level'));
+        register_setting('cdn_settings_group', 'cdn_color_setting');
+        register_setting('cdn_settings_group', 'cdn_badge_duration');
+        register_setting('cdn_settings_group', 'cdn_footer_color_setting');
+        register_setting('cdn_settings_group', 'cdn_announcement_text_type');
+        register_setting('cdn_settings_group', 'cdn_announcement_title_font');
+        register_setting('cdn_settings_group', 'cdn_announcement_title_color');
+        register_setting('cdn_settings_group', 'cdn_google_font_type'); // New setting for Google Font type
 
-            add_settings_section('cdn_settings_section', 'Plugin Settings', null, 'wp-announcement-settings');
+        add_settings_section('cdn_settings_section', 'Plugin Settings', null, 'wp-announcement-settings');
 
-            add_settings_field('cdn_access_level', 'Who can see the Announcement?', 'cdn_access_level_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_color_setting', 'Annaoucement text color', 'cdn_color_setting_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_badge_duration', 'Badge Display Duration (Days)', 'cdn_badge_duration_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_footer_color_setting', 'Footer Color Setting', 'cdn_footer_color_setting_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_announcement_text_type', 'Announcement Text Type', 'cdn_announcement_text_type_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_announcement_title_font', 'Announcement Title Font Type', 'cdn_announcement_title_font_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_announcement_title_color', 'Announcement Title Color', 'cdn_announcement_title_color_callback', 'wp-announcement-settings', 'cdn_settings_section');
-            add_settings_field('cdn_google_font_type', 'Google Font Type', 'cdn_google_font_type_callback', 'wp-announcement-settings', 'cdn_settings_section'); 
-        }
+        add_settings_field('cdn_access_level', 'Who can see the Announcement?', 'cdn_access_level_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_color_setting', 'Annaoucement text color', 'cdn_color_setting_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_badge_duration', 'Badge Display Duration (Days)', 'cdn_badge_duration_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_footer_color_setting', 'Footer Color Setting', 'cdn_footer_color_setting_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_announcement_text_type', 'Announcement Text Type', 'cdn_announcement_text_type_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_announcement_title_font', 'Announcement Title Font Type', 'cdn_announcement_title_font_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_announcement_title_color', 'Announcement Title Color', 'cdn_announcement_title_color_callback', 'wp-announcement-settings', 'cdn_settings_section');
+        add_settings_field('cdn_google_font_type', 'Google Font Type', 'cdn_google_font_type_callback', 'wp-announcement-settings', 'cdn_settings_section'); 
     }
+}
 
-    if (!function_exists('cdn_google_font_type_callback')) {
-        function cdn_google_font_type_callback() {
-            $google_font_options = array(
-                'Roboto' => 'Roboto',
-                'Open Sans' => 'Open Sans',
-                'Lato' => 'Lato',
-                'Oswald' => 'Oswald',
-                'Montserrat' => 'Montserrat',
-                'Raleway' => 'Raleway',
-                'PT Sans' => 'PT Sans',
-                'PT Serif' => 'PT Serif',
-                'Source Sans Pro' => 'Source Sans Pro',
-                'Source Serif Pro' => 'Source Serif Pro'
-            );
-            $selected_font = get_option('cdn_google_font_type', 'Roboto');
-            echo '<select name="cdn_google_font_type">';
-            foreach ($google_font_options as $value => $label) {
-                $selected = ($value == $selected_font) ? ' selected' : '';
-                echo "<option value='{$value}'{$selected}>{$label}</option>";
-            }
-            echo '</select>';
+if (!function_exists('cdn_google_font_type_callback')) {
+    function cdn_google_font_type_callback() {
+        $google_font_options = array(
+            'Roboto' => 'Roboto',
+            'Open Sans' => 'Open Sans',
+            'Lato' => 'Lato',
+            'Oswald' => 'Oswald',
+            'Montserrat' => 'Montserrat',
+            'Raleway' => 'Raleway',
+            'PT Sans' => 'PT Sans',
+            'PT Serif' => 'PT Serif',
+            'Source Sans Pro' => 'Source Sans Pro',
+            'Source Serif Pro' => 'Source Serif Pro'
+        );
+        $selected_font = get_option('cdn_google_font_type', 'Roboto');
+        echo '<select name="cdn_google_font_type">';
+        foreach ($google_font_options as $value => $label) {
+            $selected = ($value == $selected_font) ? ' selected' : '';
+            echo "<option value='{$value}'{$selected}>{$label}</option>";
         }
+        echo '</select>';
     }
+}
 
-    if (!function_exists('cdn_enqueue_google_font')) {
-        function cdn_enqueue_google_font() {
-            // Get the Google Font type from the settings
-            $google_font_type = get_option('cdn_google_font_type', 'Roboto');
+if (!function_exists('cdn_enqueue_google_font')) {
+    function cdn_enqueue_google_font() {
+        // Get the Google Font type from the settings
+        $google_font_type = get_option('cdn_google_font_type', 'Roboto');
 
-            // Enqueue the Google Font
-            wp_enqueue_style('cdn-google-font', 'https://fonts.googleapis.com/css?family=' . urlencode($google_font_type) . '&display=swap');
+        // Enqueue the Google Font
+        wp_enqueue_style('cdn-google-font', 'https://fonts.googleapis.com/css?family=' . urlencode($google_font_type) . '&display=swap');
+    }
+}
+
+// Hook the function into the admin_enqueue_scripts action
+add_action('admin_enqueue_scripts', 'cdn_enqueue_google_font');
+
+
+if (!function_exists('cdn_announcement_title_font_callback')) {
+    function cdn_announcement_title_font_callback() {
+        $font_options = array(
+            'normal' => 'Normal',
+            'bold' => 'Bold',
+            'italic' => 'Italic'
+        );
+        $selected_font = get_option('cdn_announcement_title_font', 'normal');
+        echo '<select name="cdn_announcement_title_font">';
+        foreach ($font_options as $value => $label) {
+            $selected = ($value == $selected_font) ? ' selected' : '';
+            echo "<option value='{$value}'{$selected}>{$label}</option>";
         }
+        echo '</select>';
     }
+}
 
-    // Hook the function into the admin_enqueue_scripts action
-    add_action('admin_enqueue_scripts', 'cdn_enqueue_google_font');
-
-
-    if (!function_exists('cdn_announcement_title_font_callback')) {
-        function cdn_announcement_title_font_callback() {
-            $font_options = array(
-                'normal' => 'Normal',
-                'bold' => 'Bold',
-                'italic' => 'Italic'
-            );
-            $selected_font = get_option('cdn_announcement_title_font', 'normal');
-            echo '<select name="cdn_announcement_title_font">';
-            foreach ($font_options as $value => $label) {
-                $selected = ($value == $selected_font) ? ' selected' : '';
-                echo "<option value='{$value}'{$selected}>{$label}</option>";
-            }
-            echo '</select>';
-        }
-    }
-
-    if (!function_exists('cdn_announcement_title_color_callback')) {
+if (!function_exists('cdn_announcement_title_color_callback')) {
     function cdn_announcement_title_color_callback() {
         $color_setting = get_option('cdn_announcement_title_color', '#000000');
         echo "<input type='color' name='cdn_announcement_title_color' value='{$color_setting}'>";
-        }
     }
+}
 
-    if (!function_exists('cdn_access_level_callback')) {
-        function cdn_access_level_callback() {
+if (!function_exists('cdn_access_level_callback')) {
+    function cdn_access_level_callback() {
         $access_levels = get_option('cdn_access_level', array('admin'));
         $roles = get_editable_roles();
         echo '<div>';
@@ -443,11 +413,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             echo "<input type='checkbox' name='cdn_access_level[]' value='{$role}'{$checked}> {$details['name']}<br>";
         }
         echo '</div>';
-        }
     }
+}
 
-    if (!function_exists('cdn_sanitize_access_level')) {
-        function cdn_sanitize_access_level($input) {
+if (!function_exists('cdn_sanitize_access_level')) {
+    function cdn_sanitize_access_level($input) {
         $roles = get_editable_roles();
         $allowed_roles = array_keys($roles);
         $sanitized_roles = array();
@@ -457,11 +427,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             }
         }
         return $sanitized_roles;
-        }
     }
+}
 
-    if (!function_exists('cdn_announcement_text_type_callback')) {
-        function cdn_announcement_text_type_callback() {
+if (!function_exists('cdn_announcement_text_type_callback')) {
+    function cdn_announcement_text_type_callback() {
         $text_type_options = array(
             'normal' => 'Normal',
             'light' => 'Light',
@@ -473,22 +443,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         foreach ($text_type_options as $value => $label) {
             $selected = ($value == $selected_text_type) ? ' selected' : '';
             echo "<option value='{$value}'{$selected}>{$label}</option>";
-            }
-            echo '</select>';
         }
+        echo '</select>';
     }
+}
 
-    if (!function_exists('cdn_badge_duration_callback')) {
-        function cdn_badge_duration_callback() {
-            $badge_duration = get_option('cdn_badge_duration', 7);
+if (!function_exists('cdn_badge_duration_callback')) {
+    function cdn_badge_duration_callback() {
+        $badge_duration = get_option('cdn_badge_duration', 7);
         echo "<input type='number' name='cdn_badge_duration' value='{$badge_duration}' min='1'>";
-  
-        function cdn_color_setting_callback() {
+    }
+}
+
+if (!function_exists('cdn_color_setting_callback')) {
+    function cdn_color_setting_callback() {
         $color_setting = get_option('cdn_color_setting', '#000000');
         echo "<input type='color' name='cdn_color_setting' value='{$color_setting}'>";
     }
 }
-    }
 
 if (!function_exists('cdn_footer_color_setting_callback')) {
     function cdn_footer_color_setting_callback() {
@@ -511,54 +483,35 @@ if (!function_exists('cdn_footer_color_setting_callback')) {
 	}
 
 	if (!function_exists('cdn_process_feedback')) {
-        function cdn_process_feedback() {
-            // Check if the feedback form is submitted
-            if (isset($_POST['cdn_feedback_action']) && $_POST['cdn_feedback_action'] === 'submit_feedback') {
-                // Sanitize feedback type and comment
-                $feedback_type = isset($_POST['cdn_feedback_type']) ? sanitize_text_field($_POST['cdn_feedback_type']) : '';
-                $feedback_comment = isset($_POST['cdn_feedback_comment']) ? wp_kses_post($_POST['cdn_feedback_comment']) : '';
-                $current_user = wp_get_current_user();
-                $username = $current_user->display_name;
-    
-                // Validate feedback comment
-                if (empty($feedback_comment) || strlen($feedback_comment) < 3) {
-                    // Display error notice if comment is empty or less than 3 characters
-                    add_action('admin_notices', 'cdn_feedback_error_notice');
-                    return;
-                }
-    
-                // Save feedback to options
-                $feedback_data = get_option('cdn_feedback_data', array());
-                $feedback_data[] = array(
-                    'announcement_title' => get_option('cdn_announcement_title', ''),
-                    'username' => $username,
-                    'type' => $feedback_type,
-                    'comment' => $feedback_comment,
-                    'submitted' => date('Y-m-d H:i:s')
-                );
-                update_option('cdn_feedback_data', $feedback_data);
-    
-                // Display success notice
-                add_action('admin_notices', 'cdn_feedback_success_notice');
-    
-                // Redirect back to the dashboard widget
-                wp_redirect(admin_url('index.php'));
-                exit;
+		function cdn_process_feedback() {
+        if (isset($_POST['cdn_feedback_action']) && $_POST['cdn_feedback_action'] === 'delete_selected_comments') {
+            $feedback_data = get_option('cdn_feedback_data', array());
+            $selected_for_deletion = isset($_POST['cdn_feedback_to_delete']) ? $_POST['cdn_feedback_to_delete'] : array();
+            foreach ($selected_for_deletion as $index) {
+                unset($feedback_data[$index]);
             }
-    
-            // Check if the action is to delete selected comments
-            if (isset($_POST['cdn_feedback_action']) && $_POST['cdn_feedback_action'] === 'delete_selected_comments') {
-                $feedback_data = get_option('cdn_feedback_data', array());
-                $selected_for_deletion = isset($_POST['cdn_feedback_to_delete']) ? $_POST['cdn_feedback_to_delete'] : array();
-                foreach ($selected_for_deletion as $index) {
-                    unset($feedback_data[$index]);
-                }
-                update_option('cdn_feedback_data', array_values($feedback_data));
-    
-                // Redirect back to the comments page
-                wp_redirect(admin_url('admin.php?page=wp-announcement-comments'));
-                exit;
-            }
+            update_option('cdn_feedback_data', array_values($feedback_data));
+
+            // Redirect back to the comments page with a success message
+            wp_redirect(add_query_arg('deleted', 'true', admin_url('admin.php?page=wp-announcement-comments')));
+            exit;
         }
     }
-  
+	}
+
+		// Hook into the WordPress admin_init action to process feedback
+		add_action('admin_init', 'cdn_process_feedback');
+
+		if (!function_exists('cdn_settings_page_content')) {
+			function cdn_settings_page_content() {
+				echo '<div style="width: 50%; margin: 0 auto; border: 1px solid #ccc; padding: 20px; background-color: #f9f9f9; font-family: Arial, sans-serif;">';
+				echo '<h1 style="font-size: 24px; color: #333;">WP Admin Announcement Settings</h1>';
+				echo '<form method="post" action="options.php">';
+				settings_fields('cdn_settings_group');
+				do_settings_sections('wp-announcement-settings');
+				submit_button('Save Settings');
+				echo '</form>';
+				echo '<p style="text-align: center; margin-top: 20px;">&copy; ' . date('Y') . ' WP Admin Announcement Plugin created by Creative Designers Ke.</p>';
+				echo '</div>';
+			}
+	}
